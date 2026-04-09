@@ -2,48 +2,30 @@
 <html>
 <head>
     <title>Cloud Security</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: white;
-            text-align: center;
-            font-family: Arial;
-        }
-        .box {
-            background: #1e293b;
-            padding: 20px;
-            margin: 20px auto;
-            width: 300px;
-            border-radius: 10px;
-        }
-        input, button {
-            margin: 5px;
-            padding: 10px;
-            width: 90%;
-        }
-    </style>
 </head>
-<body>
+<body style="text-align:center; font-family:Arial; background:#0f172a; color:white;">
 
 <h1>🔐 Cloud Security System</h1>
 
-<div class="box">
-<h3>Register</h3>
-<form action="/register" method="post">
-<input name="u" placeholder="Username">
-<input name="p" placeholder="Password">
-<button>Register</button>
-</form>
-</div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p style="color:yellow;">{{ messages[0] }}</p>
+  {% endif %}
+{% endwith %}
 
-<div class="box">
-<h3>Login</h3>
-<form action="/login" method="post">
-<input name="u" placeholder="Username">
-<input name="p" placeholder="Password">
-<button>Login</button>
+<h2>Register</h2>
+<form action="/register" method="post">
+    <input name="u" placeholder="Username"><br><br>
+    <input name="p" placeholder="Password"><br><br>
+    <button>Register</button>
 </form>
-</div>
+
+<h2>Login</h2>
+<form action="/login" method="post">
+    <input name="u" placeholder="Username"><br><br>
+    <input name="p" placeholder="Password"><br><br>
+    <button>Login</button>
+</form>
 
 </body>
 </html>
