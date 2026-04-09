@@ -1,42 +1,61 @@
-users = {}
-blocked_ips = []
+import sqlite3
+from cryptography.fernet import Fernet
+import os
 
+# ================= DATABASE =================
+conn = sqlite3.connect("users.db", check_same_thread=False)
+cur = conn.cursor()
 
-def register_user(username, password):
-    users[username] = password
-    return f"User {username} registered successfully!"
+cur.execute("""
+CREATE TABLE IF NOT EXISTS users(
+    username TEXT,
+    password TEXT
+)
+""")
+conn.commit()
 
+# ================= ENCRYPTION =================
+if not os.path.exists("key.key"):
+    key = Fernet.generate_key()
+    open("key.key", "wb").write(key)
+else:
+    key = open("key.key", "rb").read()
 
-def login_user(username, password):
-    if users.get(username) == password:
-        return f"Welcome {username}!"
-    return "Invalid login"
+fernet = Fernet(key)
 
+# ================= USERS =================
+def register_user(u, p):
+    cur.execute("INSERT INTO users VALUES (?, ?)", (u, p))
+    conn.commit()
+    return "Registered Successfully!"
 
-def encrypt_file(file):
-    return f"{file} encrypted successfully (demo)"
+def login_user(u, p):
+    cur.execute("SELECT * FROM users WHERE username=? AND password=?", (u, p))
+    if cur.fetchone():
+        return True
+    return False
 
+# ================= FILE =================
+def encrypt_file(filepath):
+    with open(filepath, "rb") as f:
+        data = f.read()
 
-def decrypt_file(file):
-    return f"{file} decrypted successfully (demo)"
+    encrypted = fernet.encrypt(data)
 
+    with open(filepath + ".enc", "wb") as f:
+        f.write(encrypted)
 
-def check_integrity(file):
-    return f"{file} integrity OK (demo)"
+    return "File Encrypted!"
 
+def decrypt_file(filepath):
+    with open(filepath, "rb") as f:
+        data = f.read()
 
-def block_ip(ip):
-    blocked_ips.append(ip)
-    return f"{ip} blocked"
+    decrypted = fernet.decrypt(data)
 
+    new_name = filepath.replace(".enc", "_decrypted.txt")
 
-def allow_ip(ip):
-    if ip in blocked_ips:
-        blocked_ips.remove(ip)
-    return f"{ip} allowed"
+    with open(new_name, "wb") as f:
+        f.write(decrypted)
 
-
-def check_ip(ip):
-    if ip in blocked_ips:
-        return f"{ip} is BLOCKED"
-    return f"{ip} is SAFE"
+    return "File Decrypted!"
