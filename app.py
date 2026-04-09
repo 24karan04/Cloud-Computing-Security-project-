@@ -3,9 +3,7 @@ from main import *
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return '''
+from flask import Flask, request, render_template
     <html>
     <head>
         <title>Cloud Security System</title>
