@@ -1,3 +1,9 @@
+from flask import Flask, request
+from main import *
+
+app = Flask(__name__)
+
+# ---------------- HOME ----------------
 @app.route('/')
 def home():
     return '''
@@ -19,9 +25,7 @@ def home():
                 padding: 20px;
                 text-align: center;
                 font-size: 28px;
-                font-weight: bold;
                 color: #38bdf8;
-                box-shadow: 0 2px 10px black;
             }
 
             .container {
@@ -37,17 +41,12 @@ def home():
                 margin: 15px;
                 padding: 20px;
                 border-radius: 15px;
-                box-shadow: 0 0 15px rgba(0,0,0,0.5);
-                transition: 0.3s;
-            }
-
-            .card:hover {
-                transform: scale(1.05);
+                box-shadow: 0 0 15px black;
             }
 
             h2 {
-                color: #38bdf8;
                 text-align: center;
+                color: #38bdf8;
             }
 
             input {
@@ -65,7 +64,6 @@ def home():
                 border: none;
                 border-radius: 6px;
                 cursor: pointer;
-                font-weight: bold;
             }
 
             button:hover {
@@ -85,7 +83,7 @@ def home():
                 <form action="/register" method="post">
                     <input name="u" placeholder="Username">
                     <input name="p" placeholder="Password">
-                    <button type="submit">Register</button>
+                    <button>Register</button>
                 </form>
             </div>
 
@@ -94,7 +92,7 @@ def home():
                 <form action="/login" method="post">
                     <input name="u" placeholder="Username">
                     <input name="p" placeholder="Password">
-                    <button type="submit">Login</button>
+                    <button>Login</button>
                 </form>
             </div>
 
@@ -102,7 +100,7 @@ def home():
                 <h2>Encrypt File</h2>
                 <form action="/encrypt" method="post">
                     <input name="file" placeholder="File name">
-                    <button type="submit">Encrypt</button>
+                    <button>Encrypt</button>
                 </form>
             </div>
 
@@ -110,15 +108,7 @@ def home():
                 <h2>Decrypt File</h2>
                 <form action="/decrypt" method="post">
                     <input name="file" placeholder="File name">
-                    <button type="submit">Decrypt</button>
-                </form>
-            </div>
-
-            <div class="card">
-                <h2>Integrity Check</h2>
-                <form action="/hash" method="post">
-                    <input name="file" placeholder="File name">
-                    <button type="submit">Check</button>
+                    <button>Decrypt</button>
                 </form>
             </div>
 
@@ -127,11 +117,6 @@ def home():
                 <form action="/block" method="post">
                     <input name="ip" placeholder="IP to block">
                     <button>Block</button>
-                </form>
-
-                <form action="/allow" method="post">
-                    <input name="ip" placeholder="IP to allow">
-                    <button>Allow</button>
                 </form>
 
                 <form action="/check" method="post">
@@ -145,3 +130,32 @@ def home():
     </body>
     </html>
     '''
+
+# ---------------- ROUTES ----------------
+@app.route('/register', methods=['POST'])
+def register():
+    return register_user(request.form['u'], request.form['p'])
+
+@app.route('/login', methods=['POST'])
+def login():
+    return login_user(request.form['u'], request.form['p'])
+
+@app.route('/encrypt', methods=['POST'])
+def encrypt():
+    return encrypt_file(request.form['file'])
+
+@app.route('/decrypt', methods=['POST'])
+def decrypt():
+    return decrypt_file(request.form['file'])
+
+@app.route('/block', methods=['POST'])
+def block():
+    return block_ip(request.form['ip'])
+
+@app.route('/check', methods=['POST'])
+def check():
+    return check_ip(request.form['ip'])
+
+
+if __name__ == "__main__":
+    app.run()
