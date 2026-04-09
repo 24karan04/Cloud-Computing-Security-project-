@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+body {
+    background: #0f172a;
+    color: white;
+    text-align: center;
+}
+.box {
+    background: #1e293b;
+    padding: 20px;
+    margin: 20px;
+}
+</style>
+</head>
+<body>
 
+<h1>Welcome {{user}}</h1>
+
+<div class="box">
+<h3>Encrypt File</h3>
+<form action="/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="file">
+<button>Encrypt</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Decrypt File</h3>
+<form action="/decrypt" method="post" enctype="multipart/form-data">
+<input type="file" name="file">
+<button>Decrypt</button>
+</form>
+</div>
+
+</body>
+</html>
