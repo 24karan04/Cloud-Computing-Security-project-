@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard</title>
-<style>
-body {
-    background: #0f172a;
-    color: white;
-    text-align: center;
-}
-.box {
-    background: #1e293b;
-    padding: 20px;
-    margin: 20px;
-}
-</style>
+    <title>Dashboard</title>
 </head>
-<body>
+<body style="text-align:center; font-family:Arial; background:#0f172a; color:white;">
 
-<h1>Welcome {{user}}</h1>
+<h1>Welcome {{ user }} 👋</h1>
 
-<div class="box">
-<h3>Encrypt File</h3>
-<form action="/upload" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Encrypt</button>
+<a href="/logout">Logout</a>
+
+<h2>Encrypt File</h2>
+<form action="/encrypt" method="post" enctype="multipart/form-data">
+    <input type="file" name="file"><br><br>
+    <button>Encrypt</button>
 </form>
-</div>
 
-<div class="box">
-<h3>Decrypt File</h3>
+<h2>Decrypt File</h2>
 <form action="/decrypt" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Decrypt</button>
+    <input type="file" name="file"><br><br>
+    <button>Decrypt</button>
 </form>
-</div>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <p style="color:yellow;">{{ messages[0] }}</p>
+  {% endif %}
+{% endwith %}
 
 </body>
 </html>
