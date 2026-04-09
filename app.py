@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, send_file
 import sqlite3
 from cryptography.fernet import Fernet
 import os
@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-# ---------------- DATABASE ----------------
+# ---------- DATABASE ----------
 def init_db():
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
@@ -16,7 +16,7 @@ def init_db():
 
 init_db()
 
-# ---------------- ENCRYPTION KEY ----------------
+# ---------- ENCRYPTION ----------
 if not os.path.exists("key.key"):
     key = Fernet.generate_key()
     with open("key.key", "wb") as f:
@@ -27,7 +27,7 @@ with open("key.key", "rb") as f:
 
 cipher = Fernet(key)
 
-# ---------------- ROUTES ----------------
+# ---------- ROUTES ----------
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -43,7 +43,7 @@ def register():
     conn.commit()
     conn.close()
 
-    flash("User Registered Successfully")
+    flash("✅ Registered Successfully")
     return redirect('/')
 
 @app.route('/login', methods=['POST'])
@@ -61,7 +61,7 @@ def login():
         session['user'] = u
         return redirect('/dashboard')
     else:
-        flash("Invalid Login")
+        flash("❌ Invalid Login")
         return redirect('/')
 
 @app.route('/dashboard')
@@ -80,7 +80,7 @@ def encrypt():
     with open("encrypted.bin", "wb") as f:
         f.write(encrypted)
 
-    flash("File Encrypted Successfully")
+    flash("🔐 File Encrypted (Download below)")
     return redirect('/dashboard')
 
 @app.route('/decrypt', methods=['POST'])
@@ -93,13 +93,21 @@ def decrypt():
     with open("decrypted.txt", "wb") as f:
         f.write(decrypted)
 
-    flash("File Decrypted Successfully")
+    flash("🔓 File Decrypted (Download below)")
     return redirect('/dashboard')
+
+@app.route('/download_encrypted')
+def download_encrypted():
+    return send_file("encrypted.bin", as_attachment=True)
+
+@app.route('/download_decrypted')
+def download_decrypted():
+    return send_file("decrypted.txt", as_attachment=True)
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.clear()
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
