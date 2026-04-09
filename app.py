@@ -1,37 +1,68 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from main import *
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import sqlite3
+from cryptography.fernet import Fernet
 import os
 
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# ---------------- DATABASE ----------------
+def init_db():
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)")
+    conn.commit()
+    conn.close()
 
+init_db()
 
+# ---------------- ENCRYPTION KEY ----------------
+if not os.path.exists("key.key"):
+    key = Fernet.generate_key()
+    with open("key.key", "wb") as f:
+        f.write(key)
+
+with open("key.key", "rb") as f:
+    key = f.read()
+
+cipher = Fernet(key)
+
+# ---------------- ROUTES ----------------
 @app.route('/')
 def home():
     return render_template("index.html")
-
 
 @app.route('/register', methods=['POST'])
 def register():
     u = request.form['u']
     p = request.form['p']
-    return register_user(u, p)
 
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("INSERT INTO users VALUES (?, ?)", (u, p))
+    conn.commit()
+    conn.close()
+
+    flash("User Registered Successfully")
+    return redirect('/')
 
 @app.route('/login', methods=['POST'])
 def login():
     u = request.form['u']
     p = request.form['p']
 
-    if login_user(u, p):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE username=? AND password=?", (u, p))
+    user = c.fetchone()
+    conn.close()
+
+    if user:
         session['user'] = u
-        return redirect("/dashboard")
-
-    return "Invalid Login"
-
+        return redirect('/dashboard')
+    else:
+        flash("Invalid Login")
+        return redirect('/')
 
 @app.route('/dashboard')
 def dashboard():
@@ -39,22 +70,36 @@ def dashboard():
         return redirect('/')
     return render_template("dashboard.html", user=session['user'])
 
-
-@app.route('/upload', methods=['POST'])
-def upload():
+@app.route('/encrypt', methods=['POST'])
+def encrypt():
     file = request.files['file']
-    path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(path)
-    return encrypt_file(path)
+    data = file.read()
 
+    encrypted = cipher.encrypt(data)
+
+    with open("encrypted.bin", "wb") as f:
+        f.write(encrypted)
+
+    flash("File Encrypted Successfully")
+    return redirect('/dashboard')
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
     file = request.files['file']
-    path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(path)
-    return decrypt_file(path)
+    data = file.read()
 
+    decrypted = cipher.decrypt(data)
 
-if __name__ == "__main__":
+    with open("decrypted.txt", "wb") as f:
+        f.write(decrypted)
+
+    flash("File Decrypted Successfully")
+    return redirect('/dashboard')
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
+
+if __name__ == '__main__':
     app.run(debug=True)
