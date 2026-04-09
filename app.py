@@ -1,107 +1,146 @@
 @app.route('/')
 def home():
     return '''
+    <!DOCTYPE html>
     <html>
     <head>
-        <title>Cloud Security System</title>
+        <title>Cloud Security Dashboard</title>
+
         <style>
             body {
-                font-family: Arial;
-                background: #0f172a;
+                margin: 0;
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, #0f172a, #1e293b);
                 color: white;
+            }
+
+            header {
+                background: #020617;
+                padding: 20px;
+                text-align: center;
+                font-size: 28px;
+                font-weight: bold;
+                color: #38bdf8;
+                box-shadow: 0 2px 10px black;
+            }
+
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .card {
+                background: #1e293b;
+                width: 280px;
+                margin: 15px;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.5);
+                transition: 0.3s;
+            }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+            h2 {
+                color: #38bdf8;
                 text-align: center;
             }
-            h1 {
-                color: #38bdf8;
-            }
-            .box {
-                background: #1e293b;
-                padding: 15px;
-                margin: 10px auto;
-                width: 300px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px #000;
-            }
+
             input {
-                padding: 8px;
-                margin: 5px;
-                width: 90%;
-                border-radius: 5px;
+                width: 100%;
+                padding: 10px;
+                margin: 8px 0;
+                border-radius: 6px;
                 border: none;
             }
+
             button {
-                padding: 8px 15px;
+                width: 100%;
+                padding: 10px;
                 background: #38bdf8;
                 border: none;
-                border-radius: 5px;
+                border-radius: 6px;
                 cursor: pointer;
+                font-weight: bold;
             }
+
             button:hover {
                 background: #0ea5e9;
             }
         </style>
     </head>
+
     <body>
 
-    <h1>🔐 Cloud Security System</h1>
+        <header>🔐 Cloud Security Dashboard</header>
 
-    <div class="box">
-        <h3>Register</h3>
-        <form action="/register" method="post">
-            <input name="u" placeholder="Username"><br>
-            <input name="p" placeholder="Password"><br>
-            <button type="submit">Register</button>
-        </form>
-    </div>
+        <div class="container">
 
-    <div class="box">
-        <h3>Login</h3>
-        <form action="/login" method="post">
-            <input name="u" placeholder="Username"><br>
-            <input name="p" placeholder="Password"><br>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+            <div class="card">
+                <h2>Register</h2>
+                <form action="/register" method="post">
+                    <input name="u" placeholder="Username">
+                    <input name="p" placeholder="Password">
+                    <button type="submit">Register</button>
+                </form>
+            </div>
 
-    <div class="box">
-        <h3>Encrypt File</h3>
-        <form action="/encrypt" method="post">
-            <input name="file" placeholder="File name"><br>
-            <button type="submit">Encrypt</button>
-        </form>
-    </div>
+            <div class="card">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <input name="u" placeholder="Username">
+                    <input name="p" placeholder="Password">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
 
-    <div class="box">
-        <h3>Decrypt File</h3>
-        <form action="/decrypt" method="post">
-            <input name="file" placeholder="File name"><br>
-            <button type="submit">Decrypt</button>
-        </form>
-    </div>
+            <div class="card">
+                <h2>Encrypt File</h2>
+                <form action="/encrypt" method="post">
+                    <input name="file" placeholder="File name">
+                    <button type="submit">Encrypt</button>
+                </form>
+            </div>
 
-    <div class="box">
-        <h3>Check Integrity</h3>
-        <form action="/hash" method="post">
-            <input name="file" placeholder="File name"><br>
-            <button type="submit">Check</button>
-        </form>
-    </div>
+            <div class="card">
+                <h2>Decrypt File</h2>
+                <form action="/decrypt" method="post">
+                    <input name="file" placeholder="File name">
+                    <button type="submit">Decrypt</button>
+                </form>
+            </div>
 
-    <div class="box">
-        <h3>Firewall</h3>
-        <form action="/block" method="post">
-            <input name="ip" placeholder="IP to block"><br>
-            <button type="submit">Block</button>
-        </form>
-        <form action="/allow" method="post">
-            <input name="ip" placeholder="IP to allow"><br>
-            <button type="submit">Allow</button>
-        </form>
-        <form action="/check" method="post">
-            <input name="ip" placeholder="Check IP"><br>
-            <button type="submit">Check</button>
-        </form>
-    </div>
+            <div class="card">
+                <h2>Integrity Check</h2>
+                <form action="/hash" method="post">
+                    <input name="file" placeholder="File name">
+                    <button type="submit">Check</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Firewall</h2>
+                <form action="/block" method="post">
+                    <input name="ip" placeholder="IP to block">
+                    <button>Block</button>
+                </form>
+
+                <form action="/allow" method="post">
+                    <input name="ip" placeholder="IP to allow">
+                    <button>Allow</button>
+                </form>
+
+                <form action="/check" method="post">
+                    <input name="ip" placeholder="Check IP">
+                    <button>Check</button>
+                </form>
+            </div>
+
+        </div>
 
     </body>
     </html>
