@@ -3,135 +3,101 @@ from main import *
 
 app = Flask(__name__)
 
-# ---------------- HOME ----------------
 @app.route('/')
 def home():
     return '''
-    <!DOCTYPE html>
     <html>
     <head>
-        <title>Cloud Security Dashboard</title>
-
+        <title>Cloud Security System</title>
         <style>
             body {
-                margin: 0;
-                font-family: 'Segoe UI', sans-serif;
-                background: linear-gradient(135deg, #0f172a, #1e293b);
+                font-family: Arial;
+                background: #0f172a;
                 color: white;
-            }
-
-            header {
-                background: #020617;
-                padding: 20px;
                 text-align: center;
-                font-size: 28px;
-                color: #38bdf8;
             }
-
-            .container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 20px;
-            }
-
-            .card {
+            h1 { color: #38bdf8; }
+            .box {
                 background: #1e293b;
-                width: 280px;
-                margin: 15px;
-                padding: 20px;
-                border-radius: 15px;
-                box-shadow: 0 0 15px black;
+                padding: 15px;
+                margin: 10px auto;
+                width: 300px;
+                border-radius: 10px;
             }
-
-            h2 {
-                text-align: center;
-                color: #38bdf8;
-            }
-
-            input {
-                width: 100%;
-                padding: 10px;
-                margin: 8px 0;
-                border-radius: 6px;
-                border: none;
-            }
-
-            button {
-                width: 100%;
-                padding: 10px;
-                background: #38bdf8;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-            }
-
-            button:hover {
-                background: #0ea5e9;
+            input, button {
+                padding: 8px;
+                margin: 5px;
+                width: 90%;
             }
         </style>
     </head>
-
     <body>
 
-        <header>🔐 Cloud Security Dashboard</header>
+    <h1>🔐 Cloud Security System</h1>
 
-        <div class="container">
+    <div class="box">
+        <h3>Register</h3>
+        <form action="/register" method="post">
+            <input name="u" placeholder="Username"><br>
+            <input name="p" placeholder="Password"><br>
+            <button>Register</button>
+        </form>
+    </div>
 
-            <div class="card">
-                <h2>Register</h2>
-                <form action="/register" method="post">
-                    <input name="u" placeholder="Username">
-                    <input name="p" placeholder="Password">
-                    <button>Register</button>
-                </form>
-            </div>
+    <div class="box">
+        <h3>Login</h3>
+        <form action="/login" method="post">
+            <input name="u"><br>
+            <input name="p"><br>
+            <button>Login</button>
+        </form>
+    </div>
 
-            <div class="card">
-                <h2>Login</h2>
-                <form action="/login" method="post">
-                    <input name="u" placeholder="Username">
-                    <input name="p" placeholder="Password">
-                    <button>Login</button>
-                </form>
-            </div>
+    <div class="box">
+        <h3>Encrypt</h3>
+        <form action="/encrypt" method="post">
+            <input name="file"><br>
+            <button>Encrypt</button>
+        </form>
+    </div>
 
-            <div class="card">
-                <h2>Encrypt File</h2>
-                <form action="/encrypt" method="post">
-                    <input name="file" placeholder="File name">
-                    <button>Encrypt</button>
-                </form>
-            </div>
+    <div class="box">
+        <h3>Decrypt</h3>
+        <form action="/decrypt" method="post">
+            <input name="file"><br>
+            <button>Decrypt</button>
+        </form>
+    </div>
 
-            <div class="card">
-                <h2>Decrypt File</h2>
-                <form action="/decrypt" method="post">
-                    <input name="file" placeholder="File name">
-                    <button>Decrypt</button>
-                </form>
-            </div>
+    <div class="box">
+        <h3>Integrity</h3>
+        <form action="/hash" method="post">
+            <input name="file"><br>
+            <button>Check</button>
+        </form>
+    </div>
 
-            <div class="card">
-                <h2>Firewall</h2>
-                <form action="/block" method="post">
-                    <input name="ip" placeholder="IP to block">
-                    <button>Block</button>
-                </form>
-
-                <form action="/check" method="post">
-                    <input name="ip" placeholder="Check IP">
-                    <button>Check</button>
-                </form>
-            </div>
-
-        </div>
+    <div class="box">
+        <h3>Firewall</h3>
+        <form action="/block" method="post">
+            <input name="ip"><br>
+            <button>Block</button>
+        </form>
+        <form action="/allow" method="post">
+            <input name="ip"><br>
+            <button>Allow</button>
+        </form>
+        <form action="/check" method="post">
+            <input name="ip"><br>
+            <button>Check</button>
+        </form>
+    </div>
 
     </body>
     </html>
     '''
 
-# ---------------- ROUTES ----------------
+
 @app.route('/register', methods=['POST'])
 def register():
     return register_user(request.form['u'], request.form['p'])
@@ -148,9 +114,17 @@ def encrypt():
 def decrypt():
     return decrypt_file(request.form['file'])
 
+@app.route('/hash', methods=['POST'])
+def hash_file():
+    return check_integrity(request.form['file'])
+
 @app.route('/block', methods=['POST'])
 def block():
     return block_ip(request.form['ip'])
+
+@app.route('/allow', methods=['POST'])
+def allow():
+    return allow_ip(request.form['ip'])
 
 @app.route('/check', methods=['POST'])
 def check():
@@ -158,4 +132,4 @@ def check():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
