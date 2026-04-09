@@ -1,7 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 from main import *
+import os
 
 app = Flask(__name__)
+app.secret_key = "secret123"
+
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 @app.route('/')
 def home():
@@ -19,43 +25,35 @@ def register():
 def login():
     u = request.form['u']
     p = request.form['p']
-    return login_user(u, p)
+
+    if login_user(u, p):
+        session['user'] = u
+        return redirect("/dashboard")
+
+    return "Invalid Login"
 
 
-@app.route('/encrypt', methods=['POST'])
-def encrypt():
-    file = request.form['file']
-    return encrypt_file(file)
+@app.route('/dashboard')
+def dashboard():
+    if 'user' not in session:
+        return redirect('/')
+    return render_template("dashboard.html", user=session['user'])
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file']
+    path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(path)
+    return encrypt_file(path)
 
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
-    file = request.form['file']
-    return decrypt_file(file)
-
-
-@app.route('/hash', methods=['POST'])
-def hash_file():
-    file = request.form['file']
-    return check_integrity(file)
-
-
-@app.route('/block', methods=['POST'])
-def block():
-    ip = request.form['ip']
-    return block_ip(ip)
-
-
-@app.route('/allow', methods=['POST'])
-def allow():
-    ip = request.form['ip']
-    return allow_ip(ip)
-
-
-@app.route('/check', methods=['POST'])
-def check():
-    ip = request.form['ip']
-    return check_ip(ip)
+    file = request.files['file']
+    path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(path)
+    return decrypt_file(path)
 
 
 if __name__ == "__main__":
