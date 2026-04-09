@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud Security System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI';
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+        }
 
+        h1 {
+            margin-top: 20px;
+            color: #38bdf8;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            width: 90%;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🔐 Cloud Security System</h1>
+
+<div class="container">
+
+<div class="box">
+<h3>Register</h3>
+<form action="/register" method="post">
+<input name="u" placeholder="Username"><br>
+<input name="p" placeholder="Password"><br>
+<button>Register</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Login</h3>
+<form action="/login" method="post">
+<input name="u"><br>
+<input name="p"><br>
+<button>Login</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Encrypt</h3>
+<form action="/encrypt" method="post">
+<input name="file"><br>
+<button>Encrypt</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Decrypt</h3>
+<form action="/decrypt" method="post">
+<input name="file"><br>
+<button>Decrypt</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Integrity</h3>
+<form action="/hash" method="post">
+<input name="file"><br>
+<button>Check</button>
+</form>
+</div>
+
+<div class="box">
+<h3>Firewall</h3>
+<form action="/block" method="post">
+<input name="ip"><br>
+<button>Block</button>
+</form>
+<form action="/allow" method="post">
+<input name="ip"><br>
+<button>Allow</button>
+</form>
+</div>
+
+</div>
+
+</body>
+</html>
