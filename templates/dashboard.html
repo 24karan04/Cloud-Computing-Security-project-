@@ -1,69 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: linear-gradient(135deg,#0f172a,#1e293b);
-            color: white;
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .card {
-            background: #1e293b;
-            padding: 20px;
-            margin: 15px;
-            width: 250px;
-            border-radius: 10px;
-        }
-        input {
-            padding: 8px;
-            width: 90%;
-            margin: 5px;
-        }
-        button {
-            padding: 8px 15px;
-            background: #38bdf8;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+<title>Dashboard</title>
+<style>
+body {
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+.container {
+    margin-top: 50px;
+}
+.card {
+    background: #1e293b;
+    padding: 20px;
+    margin: 20px;
+    display: inline-block;
+    border-radius: 10px;
+}
+input, button {
+    padding: 10px;
+    margin: 10px;
+}
+button {
+    background: #38bdf8;
+    border: none;
+}
+</style>
 </head>
 
 <body>
 
-<h1>Welcome {{ user }} 👋</h1>
-<a href="/logout" style="color:red;">Logout</a>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<p style="color:yellow;">{{ messages[0] }}</p>
-{% endif %}
-{% endwith %}
+<h1>🚀 Cloud Security Dashboard</h1>
 
 <div class="container">
 
 <div class="card">
-<h3>Encrypt File</h3>
-<form action="/encrypt" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Encrypt</button>
-</form>
-<a href="/download_encrypted">Download Encrypted</a>
+    <h3>Encrypt</h3>
+    <form action="/encrypt" method="post">
+        <input type="text" name="text" placeholder="Enter text">
+        <button type="submit">Encrypt</button>
+    </form>
 </div>
 
 <div class="card">
-<h3>Decrypt File</h3>
-<form action="/decrypt" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Decrypt</button>
-</form>
-<a href="/download_decrypted">Download Decrypted</a>
+    <h3>Decrypt</h3>
+    <form action="/decrypt" method="post">
+        <input type="text" name="text" placeholder="Enter text">
+        <button type="submit">Decrypt</button>
+    </form>
 </div>
 
 </div>
