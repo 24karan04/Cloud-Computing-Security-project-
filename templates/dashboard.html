@@ -2,55 +2,97 @@
 <html>
 <head>
 <title>Dashboard</title>
+
 <style>
 body {
-    background: #0f172a;
+    margin: 0;
+    font-family: Arial, sans-serif;
     color: white;
     text-align: center;
-    font-family: Arial;
+
+    /* Modern gradient background */
+    background: linear-gradient(135deg, #020617, #0f172a, #1e3a8a);
+    height: 100vh;
 }
-.container {
-    margin-top: 50px;
-}
-.card {
-    background: #1e293b;
+
+/* Header */
+.header {
     padding: 20px;
-    margin: 20px;
-    display: inline-block;
-    border-radius: 10px;
+    font-size: 28px;
+    font-weight: bold;
 }
-input, button {
-    padding: 10px;
-    margin: 10px;
+
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    gap: 40px;
 }
-button {
-    background: #38bdf8;
-    border: none;
+
+/* Glass cards */
+.card {
+    width: 260px;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* Hover animation */
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 30px rgba(0,150,255,0.6);
+}
+
+/* Titles */
+.card h2 {
+    margin-bottom: 10px;
+}
+
+/* Description */
+.card p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Remove link style */
+a {
+    text-decoration: none;
+    color: white;
 }
 </style>
+
 </head>
 
 <body>
 
-<h1>🚀 Cloud Security Dashboard</h1>
+<div class="header">
+    ☁️ Cloud Security Dashboard
+</div>
 
 <div class="container">
 
-<div class="card">
-    <h3>Encrypt</h3>
-    <form action="/encrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text">
-        <button type="submit">Encrypt</button>
-    </form>
-</div>
+    <!-- Encrypt Card -->
+    <a href="/encrypt">
+        <div class="card">
+            <h2>🔐 Encrypt Data</h2>
+            <p>Secure your data using encryption</p>
+        </div>
+    </a>
 
-<div class="card">
-    <h3>Decrypt</h3>
-    <form action="/decrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text">
-        <button type="submit">Decrypt</button>
-    </form>
-</div>
+    <!-- Decrypt Card -->
+    <a href="/decrypt">
+        <div class="card">
+            <h2>🔓 Decrypt Data</h2>
+            <p>Recover your encrypted data</p>
+        </div>
+    </a>
 
 </div>
 
