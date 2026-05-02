@@ -2,29 +2,16 @@
 <html>
 <head>
 <style>
-body{
-    background:#020617;
-    color:red;
-    text-align:center;
-    font-family:Segoe UI;
-}
-
-.result{
-    padding:20px;
-    background:black;
-    border:1px solid red;
-    margin-top:150px;
-}
+    :root { --neon: #ff4d4d; --bg: #020617; }
+    /* Use the same result-box CSS from encrypt_result.html */
 </style>
 </head>
-
 <body>
-
-<h1>Decrypted Text</h1>
-
-<div class="result">{{result}}</div><br>
-
-<a href="/decrypt"><button>Decrypt Another</button></a>
-
+    <div class="bg-grid"></div>
+    <div class="glass-panel">
+        <h1>📂 Decrypted Text</h1>
+        <div class="result-box" style="border-color: var(--neon); color: white;">{{result}}</div>
+        <a href="/decrypt"><button style="background: var(--neon); color: white;">Decrypt Another</button></a>
+    </div>
 </body>
 </html>
