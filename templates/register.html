@@ -11,25 +11,51 @@
     font-family:'Segoe UI',sans-serif;
 }
 
-/* FULL BACKGROUND IMAGE */
+/* ===== BODY ===== */
 body{
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background: url("{{ url_for('static', filename='Cyber register.png') }}") no-repeat center center/cover;
+    background:#020617;
+    overflow:hidden;
+    color:white;
 }
 
-/* DARK OVERLAY (VERY IMPORTANT FOR VISIBILITY) */
+/* ===== GRID ANIMATION ===== */
 body::before{
     content:"";
     position:absolute;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.75);
+    width:200%;
+    height:200%;
+    background-image:
+        linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation: moveGrid 12s linear infinite;
 }
 
-/* GLASS CARD */
+@keyframes moveGrid{
+    from{transform:translate(0,0);}
+    to{transform:translate(-40px,-40px);}
+}
+
+/* ===== PARTICLES ===== */
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:#00ffff;
+    border-radius:50%;
+    animation: float 10s linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(100vh);}
+    to{transform:translateY(-10vh);}
+}
+
+/* ===== GLASS CARD ===== */
 .container{
     position:relative;
     width:420px;
@@ -37,70 +63,61 @@ body::before{
     border-radius:20px;
     background:rgba(0,0,0,0.6);
     backdrop-filter: blur(15px);
-    box-shadow:0 0 40px rgba(0,200,255,0.3);
-    color:white;
+    box-shadow:0 0 50px rgba(0,255,255,0.3);
     text-align:center;
+    z-index:2;
 }
 
-/* TITLE */
+/* ===== TITLE ===== */
 h1{
-    color:#5cc8ff;
-    margin-bottom:5px;
+    color:#00ffff;
+    text-shadow:0 0 20px #00ffff;
 }
 
-.sub{
-    color:#aaa;
-    margin-bottom:20px;
-}
-
-/* INPUT BOX */
+/* ===== INPUT ===== */
 .input-box{
     margin:15px 0;
     text-align:left;
 }
 
-.input-box label{
-    font-size:14px;
-    color:#ccc;
-}
-
-.input-box input{
+input{
     width:100%;
     padding:12px;
-    margin-top:5px;
     border-radius:10px;
-    border:1px solid #2a3a5a;
+    border:1px solid #00ffff44;
     background:#0b1224;
     color:white;
 }
 
-/* BUTTON */
+/* ===== BUTTON ANIMATION ===== */
 .btn{
     width:100%;
     padding:12px;
     margin-top:20px;
     border:none;
     border-radius:10px;
-    background: linear-gradient(90deg,#4facfe,#8e44ad);
+    background: linear-gradient(90deg,#00ffff,#0077ff,#00ffff);
+    background-size:200%;
+    animation: glowBtn 3s linear infinite;
     color:white;
     font-weight:bold;
     cursor:pointer;
-    transition:0.3s;
 }
 
-.btn:hover{
-    transform:scale(1.05);
+@keyframes glowBtn{
+    0%{background-position:0%}
+    100%{background-position:200%}
 }
 
-/* FOOTER */
+/* ===== LINK ===== */
+a{
+    color:#00ffff;
+    text-decoration:none;
+}
+
 .footer{
     margin-top:20px;
     color:#aaa;
-}
-
-a{
-    color:#5cc8ff;
-    text-decoration:none;
 }
 </style>
 
@@ -108,33 +125,33 @@ a{
 
 <body>
 
+<!-- PARTICLES -->
+<script>
+for(let i=0;i<60;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(p);
+}
+</script>
+
+<!-- CARD -->
 <div class="container">
 
 <h1>☁️ Cloud Security</h1>
-<p class="sub">Secure your data in the cloud</p>
+<p>Secure your data in the cloud</p>
 
 <h2>Create Account</h2>
 
 <form method="POST">
 
 <div class="input-box">
-<label>Full Name</label>
-<input type="text" name="name" placeholder="Enter your full name">
+<input type="email" name="username" placeholder="Email" required>
 </div>
 
 <div class="input-box">
-<label>Email Address</label>
-<input type="email" name="username" placeholder="Enter your email" required>
-</div>
-
-<div class="input-box">
-<label>Password</label>
-<input type="password" name="password" placeholder="Create password" required>
-</div>
-
-<div class="input-box">
-<label>Confirm Password</label>
-<input type="password" placeholder="Confirm password">
+<input type="password" name="password" placeholder="Password" required>
 </div>
 
 <button class="btn">Register</button>
@@ -142,7 +159,7 @@ a{
 </form>
 
 <div class="footer">
-Already have account? <a href="/login">Login here</a>
+Already have account? <a href="/login">Login</a>
 </div>
 
 </div>
