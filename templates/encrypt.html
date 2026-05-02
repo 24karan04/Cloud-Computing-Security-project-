@@ -1,148 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Encryption</title>
+<title>Encrypting...</title>
+
+<script>
+setTimeout(() => {
+    window.location.href = "/encrypt/result?text={{ text }}";
+}, 2500);
+</script>
 
 <style>
 body {
-    margin: 0;
-    background: radial-gradient(circle at center, #000000, #020617);
-    font-family: Arial;
-    color: #00ffcc;
-    text-align: center;
+    background:#020617;
+    color:#00ffcc;
+    text-align:center;
+    font-family:Arial;
 }
 
-/* Title */
-h1 {
-    margin-top: 40px;
-    text-shadow: 0 0 10px #00ffcc, 0 0 30px #00ffcc;
+.loader {
+    margin:150px auto;
+    width:120px;
+    height:120px;
+    border:6px solid #111;
+    border-top:6px solid #00ffcc;
+    border-radius:50%;
+    animation:spin 1.5s linear infinite;
 }
 
-/* Circle UI */
-.circle {
-    position: relative;
-    margin: 100px auto;
-    width: 250px;
-    height: 250px;
-}
-
-.outer {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    border: 2px solid #00ffcc;
-    border-radius: 50%;
-    box-shadow: 0 0 20px #00ffcc;
-    animation: spin 8s linear infinite;
-}
-
-.middle {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    top: 35px;
-    left: 35px;
-    border: 2px dashed #00ffcc;
-    border-radius: 50%;
-    animation: spinReverse 6s linear infinite;
-}
-
-.inner {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 75px;
-    left: 75px;
-    border-radius: 50%;
-    background: rgba(0,255,200,0.1);
-    box-shadow: 0 0 30px #00ffcc;
-    animation: pulse 2s infinite;
-}
-
-.center {
-    position: absolute;
-    top: 105px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* Animations */
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes spinReverse {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-/* Form */
-input, button {
-    padding: 12px;
-    margin: 10px;
-    width: 250px;
-    background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-}
-
-button {
-    cursor: pointer;
-    box-shadow: 0 0 10px #00ffcc;
-}
-
-button:hover {
-    box-shadow: 0 0 20px #00ffcc;
-}
-
-a {
-    text-decoration: none;
+    100% { transform:rotate(360deg); }
 }
 </style>
-
 </head>
 
 <body>
 
-<h1>🔐 Encryption System</h1>
-
-<div class="circle">
-    <div class="outer"></div>
-    <div class="middle"></div>
-    <div class="inner"></div>
-    <div class="center">ENCRYPTING</div>
-</div>
-
-<form action="/encrypt" method="post">
-    <input type="text" name="text" placeholder="Enter text" required><br>
-    <button type="submit">Encrypt</button>
-</form>
-
-<!-- RESULT -->
-{% if result %}
-<p>Encrypted: {{ result }}</p>
-
-<!-- GO TO DECRYPT BUTTON -->
-<a href="/decrypt?text={{ result }}">
-    <button style="
-        border:1px solid #ff0033;
-        color:#ff0033;
-        box-shadow:0 0 10px #ff0033;
-    ">
-        🔓 Go to Decryption
-    </button>
-</a>
-{% endif %}
-
-<br><br>
-<a href="/dashboard" style="color:#00ffcc;">⬅ Back to Dashboard</a>
+<h1>Encrypting your data...</h1>
+<div class="loader"></div>
 
 </body>
 </html>
