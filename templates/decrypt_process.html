@@ -2,39 +2,15 @@
 <html>
 <head>
 <style>
-body{
-    background:#020617;
-    color:red;
-    text-align:center;
-    font-family:Segoe UI;
-}
-
-.circle{
-    width:200px;
-    height:200px;
-    border:10px solid red;
-    border-top:10px solid transparent;
-    border-radius:50%;
-    margin:150px auto;
-    animation:spin 2s linear infinite;
-}
-
-@keyframes spin{
-    100%{transform:rotate(360deg);}
-}
+    :root { --neon: #ff4d4d; --bg: #020617; }
+    /* Use the same loader CSS from encrypt_process.html */
 </style>
 </head>
-
 <body>
-
-<h1>Decrypting your data...</h1>
-<div class="circle"></div>
-
-<script>
-setTimeout(()=>{
-    window.location="/decrypt_result?text={{text}}"
-},2000)
-</script>
-
+    <h1>Decrypting your data...</h1>
+    <div class="loader"></div>
+    <script>
+        setTimeout(()=>{ window.location="/decrypt_result?text={{text}}" }, 2000)
+    </script>
 </body>
 </html>
