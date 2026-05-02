@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Encrypt</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    color: white;
+    text-align: center;
+    background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+/* Animation */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px cyan; }
+    50% { text-shadow: 0 0 20px cyan; }
+    100% { text-shadow: 0 0 5px cyan; }
+}
+
+.title {
+    margin-top: 50px;
+    font-size: 30px;
+    animation: glow 2s infinite;
+}
+
+.box {
+    margin-top: 80px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-block;
+}
+
+input {
+    padding: 12px;
+    width: 250px;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    padding: 12px;
+    width: 270px;
+    background: #22c55e;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    margin-top: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="title">🔐 Encryption Process</div>
+
+<div class="box">
+    <form action="/encrypt" method="post">
+        <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
+        <button type="submit">Encrypt</button>
+    </form>
+</div>
+
+</body>
+</html>
