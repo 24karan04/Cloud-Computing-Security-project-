@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import base64
 import sqlite3
+import os
 
 app = Flask(__name__)
-app.secret_key = "secret123"   # change later
+
+# Secret key (for sessions)
+app.secret_key = os.environ.get("SECRET_KEY", "fallback_secret")
+
+# Database path (important for Render)
+DB_PATH = os.path.join(os.getcwd(), "users.db")
 
 # ---------- DATABASE ----------
 def init_db():
-    conn = sqlite3.connect("users.db")
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)")
     conn.commit()
@@ -15,21 +21,21 @@ def init_db():
 
 init_db()
 
-# ---------- ENCRYPT/DECRYPT ----------
+# ---------- ENCRYPT / DECRYPT ----------
 def encrypt_text(text):
     return base64.b64encode(text.encode()).decode()
 
 def decrypt_text(text):
     return base64.b64decode(text.encode()).decode()
 
-# ---------- AUTH ----------
+# ---------- LOGIN ----------
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
         user = c.fetchone()
@@ -43,14 +49,14 @@ def login():
 
     return render_template("login.html")
 
-
+# ---------- REGISTER ----------
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         c.execute("INSERT INTO users VALUES (?, ?)", (username, password))
         conn.commit()
@@ -60,7 +66,7 @@ def register():
 
     return render_template("register.html")
 
-
+# ---------- LOGOUT ----------
 @app.route("/logout")
 def logout():
     session.pop("user", None)
@@ -85,12 +91,10 @@ def encrypt():
 
     return render_template("encrypt.html")
 
-
 @app.route("/encrypt/process")
 def encrypt_process():
     text = request.args.get("text")
     return render_template("encrypt_process.html", text=text)
-
 
 @app.route("/encrypt/result")
 def encrypt_result():
@@ -110,12 +114,10 @@ def decrypt():
 
     return render_template("decrypt.html")
 
-
 @app.route("/decrypt/process")
 def decrypt_process():
     text = request.args.get("text")
     return render_template("decrypt_process.html", text=text)
-
 
 @app.route("/decrypt/result")
 def decrypt_result():
@@ -123,6 +125,7 @@ def decrypt_result():
     result = decrypt_text(text)
     return render_template("decrypt_result.html", result=result)
 
-
+# ---------- RUN ----------
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
