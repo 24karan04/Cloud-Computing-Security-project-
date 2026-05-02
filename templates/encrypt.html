@@ -6,62 +6,54 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: white;
+    background: black;
+    color: cyan;
     text-align: center;
-    background: linear-gradient(135deg, #020617, #0f172a);
+    font-family: Arial;
 }
 
-/* Glow animation */
-@keyframes glow {
-    0% { text-shadow: 0 0 5px cyan; }
-    50% { text-shadow: 0 0 20px cyan; }
-    100% { text-shadow: 0 0 5px cyan; }
-}
-
-.title {
+/* Neon glow text */
+h1 {
     margin-top: 50px;
-    font-size: 30px;
-    animation: glow 2s infinite;
+    text-shadow: 0 0 10px cyan, 0 0 20px blue;
 }
 
+/* Box */
 .box {
     margin-top: 80px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    padding: 30px;
-    border-radius: 15px;
-    display: inline-block;
 }
 
 /* Input */
 input {
     padding: 12px;
     width: 250px;
-    border-radius: 8px;
-    border: none;
+    background: black;
+    border: 1px solid cyan;
+    color: cyan;
+    border-radius: 5px;
 }
 
 /* Button */
 button {
     padding: 12px;
     width: 270px;
-    background: #22c55e;
-    border: none;
-    border-radius: 8px;
-    color: white;
     margin-top: 10px;
+    background: black;
+    border: 1px solid cyan;
+    color: cyan;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 0 10px cyan;
 }
 
 button:hover {
-    opacity: 0.9;
+    box-shadow: 0 0 20px cyan, 0 0 40px blue;
 }
 
-/* Back link */
-a {
-    color: #38bdf8;
-    text-decoration: none;
+/* Result */
+.result {
+    margin-top: 20px;
+    text-shadow: 0 0 10px cyan;
 }
 </style>
 
@@ -69,25 +61,22 @@ a {
 
 <body>
 
-<div class="title">🔐 Encryption Process</div>
+<h1>🔐 Encryption</h1>
 
 <div class="box">
-
     <form action="/encrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
+        <input type="text" name="text" placeholder="Enter text" required><br>
         <button type="submit">Encrypt</button>
     </form>
 
-    <!-- RESULT SHOWS HERE -->
     {% if result %}
-        <p style="color:cyan; margin-top:15px;">
-            Encrypted: {{ result }}
-        </p>
+    <div class="result">
+        Encrypted: {{ result }}
+    </div>
     {% endif %}
 
-    <br>
-    <a href="/dashboard">⬅ Back to Dashboard</a>
-
+    <br><br>
+    <a href="/dashboard" style="color:cyan;">⬅ Back</a>
 </div>
 
 </body>
