@@ -1,27 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Decrypt</title>
+<title>Decryption</title>
 
 <style>
 body {
-    background: black;
-    color: #00ff99;
-    text-align: center;
+    margin: 0;
+    background: radial-gradient(circle at center, #000000, #020617);
     font-family: Arial;
+    color: #ff0033;
+    text-align: center;
 }
 
+/* Title */
 h1 {
-    margin-top: 50px;
+    margin-top: 40px;
+    text-shadow: 0 0 10px #ff0033, 0 0 30px #ff0033;
+}
+
+.circle {
+    position: relative;
+    margin: 100px auto;
+    width: 250px;
+    height: 250px;
+}
+
+.outer {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 2px solid #ff0033;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #ff0033;
+    animation: spin 8s linear infinite;
+}
+
+.middle {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    top: 35px;
+    left: 35px;
+    border: 2px dashed #ff0033;
+    border-radius: 50%;
+    animation: spinReverse 6s linear infinite;
+}
+
+.inner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 75px;
+    left: 75px;
+    border-radius: 50%;
+    background: rgba(255,0,50,0.1);
+    box-shadow: 0 0 30px #ff0033;
+    animation: pulse 2s infinite;
+}
+
+.center {
+    position: absolute;
+    top: 105px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
 input, button {
     padding: 12px;
     margin: 10px;
     width: 250px;
-    background: black;
-    border: 1px solid #00ff99;
-    color: #00ff99;
+    background: transparent;
+    border: 1px solid #ff0033;
+    color: #ff0033;
 }
 
 button {
@@ -33,7 +99,14 @@ button {
 
 <body>
 
-<h1>🔓 Decryption</h1>
+<h1>🔓 Decryption System</h1>
+
+<div class="circle">
+    <div class="outer"></div>
+    <div class="middle"></div>
+    <div class="inner"></div>
+    <div class="center">DECRYPTING</div>
+</div>
 
 <form action="/decrypt" method="post">
     <input type="text" name="text" placeholder="Enter text" required><br>
@@ -41,11 +114,11 @@ button {
 </form>
 
 {% if result %}
-<p>Decrypted: {{ result }}</p>
+<p style="color:#ff0033;">Decrypted: {{ result }}</p>
 {% endif %}
 
 <br>
-<a href="/dashboard">⬅ Back</a>
+<a href="/dashboard" style="color:#ff0033;">⬅ Back</a>
 
 </body>
 </html>
