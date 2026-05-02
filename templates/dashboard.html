@@ -6,34 +6,68 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: black;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at center, #000000, #020617);
     color: cyan;
     text-align: center;
+    overflow: hidden;
 }
 
-/* Neon title */
+/* Animated grid background */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: linear-gradient(rgba(0,255,255,0.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,255,255,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveGrid 15s linear infinite;
+}
+
+@keyframes moveGrid {
+    from { transform: translate(0,0); }
+    to { transform: translate(-40px,-40px); }
+}
+
+/* Title */
 h1 {
-    margin-top: 30px;
-    text-shadow: 0 0 10px cyan, 0 0 20px blue;
+    margin-top: 40px;
+    text-shadow: 0 0 10px cyan, 0 0 30px cyan;
 }
 
-/* Cards */
+/* Container */
+.container {
+    margin-top: 120px;
+}
+
+/* Neon cards */
 .card {
     display: inline-block;
-    margin: 40px;
-    padding: 30px;
+    margin: 30px;
+    padding: 40px;
+    width: 260px;
+    border-radius: 20px;
     border: 1px solid cyan;
-    border-radius: 15px;
-    box-shadow: 0 0 15px cyan;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 20px cyan;
     transition: 0.3s;
+    cursor: pointer;
 }
 
+/* Hover effect */
 .card:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 25px cyan, 0 0 40px blue;
+    box-shadow: 0 0 30px cyan, 0 0 60px blue;
 }
 
+/* Icons */
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* Links */
 a {
     text-decoration: none;
     color: cyan;
@@ -46,17 +80,27 @@ a {
 
 <h1>☁️ Cloud Security Dashboard</h1>
 
-<a href="{{ url_for('encrypt') }}">
-<div class="card">
-    <h2>🔐 Encrypt</h2>
-</div>
-</a>
+<div class="container">
 
-<a href="{{ url_for('decrypt') }}">
-<div class="card">
-    <h2>🔓 Decrypt</h2>
+    <!-- Encrypt -->
+    <a href="{{ url_for('encrypt') }}">
+        <div class="card">
+            <div class="icon">🔐</div>
+            <h2>Encryption</h2>
+            <p>Secure your data with advanced encryption</p>
+        </div>
+    </a>
+
+    <!-- Decrypt -->
+    <a href="{{ url_for('decrypt') }}">
+        <div class="card" style="border-color:#ff0033; box-shadow:0 0 20px #ff0033;">
+            <div class="icon">🔓</div>
+            <h2 style="color:#ff0033;">Decryption</h2>
+            <p style="color:#ff0033;">Recover encrypted information</p>
+        </div>
+    </a>
+
 </div>
-</a>
 
 </body>
 </html>
