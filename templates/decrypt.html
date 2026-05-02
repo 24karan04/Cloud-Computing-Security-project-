@@ -6,55 +6,48 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: white;
+    background: black;
+    color: #00ff99;
     text-align: center;
-    background: linear-gradient(135deg, #020617, #1e293b);
+    font-family: Arial;
 }
 
-.title {
+h1 {
     margin-top: 50px;
-    font-size: 30px;
-    color: #38bdf8;
+    text-shadow: 0 0 10px #00ff99;
 }
 
 .box {
     margin-top: 80px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    padding: 30px;
-    border-radius: 15px;
-    display: inline-block;
 }
 
-/* Input */
 input {
     padding: 12px;
     width: 250px;
-    border-radius: 8px;
-    border: none;
+    background: black;
+    border: 1px solid #00ff99;
+    color: #00ff99;
+    border-radius: 5px;
 }
 
-/* Button */
 button {
     padding: 12px;
     width: 270px;
-    background: #ef4444;
-    border: none;
-    border-radius: 8px;
-    color: white;
     margin-top: 10px;
+    background: black;
+    border: 1px solid #00ff99;
+    color: #00ff99;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 0 10px #00ff99;
 }
 
 button:hover {
-    opacity: 0.9;
+    box-shadow: 0 0 20px #00ff99;
 }
 
-/* Link */
-a {
-    color: #38bdf8;
-    text-decoration: none;
+.result {
+    margin-top: 20px;
 }
 </style>
 
@@ -62,25 +55,22 @@ a {
 
 <body>
 
-<div class="title">🔓 Decryption Process</div>
+<h1>🔓 Decryption</h1>
 
 <div class="box">
-
     <form action="/decrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text to decrypt" required><br>
+        <input type="text" name="text" placeholder="Enter text" required><br>
         <button type="submit">Decrypt</button>
     </form>
 
-    <!-- RESULT SHOWS HERE -->
     {% if result %}
-        <p style="color:lightgreen; margin-top:15px;">
-            Decrypted: {{ result }}
-        </p>
+    <div class="result">
+        Decrypted: {{ result }}
+    </div>
     {% endif %}
 
-    <br>
-    <a href="/dashboard">⬅ Back to Dashboard</a>
-
+    <br><br>
+    <a href="/dashboard" style="color:#00ff99;">⬅ Back</a>
 </div>
 
 </body>
