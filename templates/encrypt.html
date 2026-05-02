@@ -5,55 +5,28 @@
 
 <style>
 body {
-    margin: 0;
     background: black;
     color: cyan;
     text-align: center;
     font-family: Arial;
 }
 
-/* Neon glow text */
 h1 {
     margin-top: 50px;
-    text-shadow: 0 0 10px cyan, 0 0 20px blue;
+    text-shadow: 0 0 10px cyan;
 }
 
-/* Box */
-.box {
-    margin-top: 80px;
-}
-
-/* Input */
-input {
+input, button {
     padding: 12px;
+    margin: 10px;
     width: 250px;
     background: black;
     border: 1px solid cyan;
     color: cyan;
-    border-radius: 5px;
 }
 
-/* Button */
 button {
-    padding: 12px;
-    width: 270px;
-    margin-top: 10px;
-    background: black;
-    border: 1px solid cyan;
-    color: cyan;
-    border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 0 10px cyan;
-}
-
-button:hover {
-    box-shadow: 0 0 20px cyan, 0 0 40px blue;
-}
-
-/* Result */
-.result {
-    margin-top: 20px;
-    text-shadow: 0 0 10px cyan;
 }
 </style>
 
@@ -63,21 +36,17 @@ button:hover {
 
 <h1>🔐 Encryption</h1>
 
-<div class="box">
-    <form action="/encrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text" required><br>
-        <button type="submit">Encrypt</button>
-    </form>
+<form action="/encrypt" method="post">
+    <input type="text" name="text" placeholder="Enter text" required><br>
+    <button type="submit">Encrypt</button>
+</form>
 
-    {% if result %}
-    <div class="result">
-        Encrypted: {{ result }}
-    </div>
-    {% endif %}
+{% if result %}
+<p>Encrypted: {{ result }}</p>
+{% endif %}
 
-    <br><br>
-    <a href="/dashboard" style="color:cyan;">⬅ Back</a>
-</div>
+<br>
+<a href="/dashboard">⬅ Back</a>
 
 </body>
 </html>
