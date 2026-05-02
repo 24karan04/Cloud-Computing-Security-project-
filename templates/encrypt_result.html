@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Encrypted</title>
+
+<style>
+body {
+    background:#020617;
+    color:#00ffcc;
+    text-align:center;
+    font-family:Arial;
+}
+
+.box {
+    margin-top:150px;
+    border:1px solid #00ffcc;
+    padding:30px;
+    display:inline-block;
+    border-radius:15px;
+    box-shadow:0 0 20px #00ffcc;
+}
+
+button {
+    margin:10px;
+    padding:10px 20px;
+    border:none;
+    background:#00ffcc;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Encryption Complete ✅</h1>
+
+<div class="box">
+<p><b>Encrypted Text:</b></p>
+<p>{{ result }}</p>
+</div>
+
+<br><br>
+
+<a href="/encrypt"><button>Encrypt Again</button></a>
+<a href="/decrypt"><button>Go to Decrypt</button></a>
+<a href="/dashboard"><button>Dashboard</button></a>
+
+</body>
+</html>
