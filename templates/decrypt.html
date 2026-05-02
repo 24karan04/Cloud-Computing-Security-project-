@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Decrypt</title>
 <style>
-body {
+body{
     background:#020617;
-    color:#ff0033;
+    color:red;
     text-align:center;
-    font-family:Arial;
+    font-family:Segoe UI;
 }
 
-.box {
-    margin-top:150px;
+input{
+    padding:15px;
+    width:300px;
+    background:black;
+    border:1px solid red;
+    color:red;
 }
 
-input, button {
-    padding:12px;
-    width:250px;
-    margin:10px;
-    background:transparent;
-    border:1px solid #ff0033;
-    color:#ff0033;
+button{
+    padding:15px;
+    width:320px;
+    background:red;
+    border:none;
 }
 </style>
 </head>
@@ -29,15 +30,10 @@ input, button {
 
 <h1>🔓 Decryption Process</h1>
 
-<div class="box">
 <form method="POST">
-<input type="text" name="text" placeholder="Enter encrypted text" required><br>
-<button type="submit">Decrypt</button>
+<input name="text" required><br>
+<button>Decrypt</button>
 </form>
-</div>
-
-<br>
-<a href="/dashboard">⬅ Back</a>
 
 </body>
 </html>
