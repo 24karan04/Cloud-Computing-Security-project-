@@ -2,10 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Temporary storage (for demo)
+# Temporary user storage
 users = {}
 
-# ---------------- HOME (REGISTER PAGE) ----------------
+# ---------------- HOME ----------------
 @app.route('/')
 def home():
     return render_template("register.html")
@@ -27,7 +27,7 @@ def login_page():
     return render_template("login.html")
 
 
-# ---------------- LOGIN FUNCTION ----------------
+# ---------------- LOGIN ----------------
 @app.route('/login_user', methods=['POST'])
 def login_user():
     username = request.form['username']
@@ -45,25 +45,23 @@ def dashboard():
     return render_template("dashboard.html")
 
 
-# ---------------- ENCRYPT PAGE ----------------
-@app.route('/encrypt', methods=['GET', 'POST'])
+# ---------------- ENCRYPT ----------------
+@app.route('/encrypt', methods=['GET','POST'])
 def encrypt():
     if request.method == 'POST':
         text = request.form['text']
-        result = text[::-1]   # simple demo encryption
+        result = text[::-1]
         return render_template("encrypt.html", result=result)
-
     return render_template("encrypt.html")
 
 
-# ---------------- DECRYPT PAGE ----------------
-@app.route('/decrypt', methods=['GET', 'POST'])
+# ---------------- DECRYPT ----------------
+@app.route('/decrypt', methods=['GET','POST'])
 def decrypt():
     if request.method == 'POST':
         text = request.form['text']
-        result = text[::-1]   # reverse back
+        result = text[::-1]
         return render_template("decrypt.html", result=result)
-
     return render_template("decrypt.html")
 
 
