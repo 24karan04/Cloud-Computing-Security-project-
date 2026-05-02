@@ -1,34 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Encrypting...</title>
-
-<script>
-setTimeout(() => {
-    window.location.href = "/encrypt/result?text={{ text }}";
-}, 2500);
-</script>
-
 <style>
-body {
+body{
     background:#020617;
     color:#00ffcc;
     text-align:center;
-    font-family:Arial;
+    font-family:Segoe UI;
 }
 
-.loader {
-    margin:150px auto;
-    width:120px;
-    height:120px;
-    border:6px solid #111;
-    border-top:6px solid #00ffcc;
+/* circle loader */
+.circle{
+    width:200px;
+    height:200px;
+    border:10px solid #00ffcc;
+    border-top:10px solid transparent;
     border-radius:50%;
-    animation:spin 1.5s linear infinite;
+    margin:150px auto;
+    animation:spin 2s linear infinite;
 }
 
-@keyframes spin {
-    100% { transform:rotate(360deg); }
+@keyframes spin{
+    100%{transform:rotate(360deg);}
 }
 </style>
 </head>
@@ -36,7 +29,13 @@ body {
 <body>
 
 <h1>Encrypting your data...</h1>
-<div class="loader"></div>
+<div class="circle"></div>
+
+<script>
+setTimeout(()=>{
+    window.location="/encrypt_result?text={{text}}"
+},2000)
+</script>
 
 </body>
 </html>
