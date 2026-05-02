@@ -2,38 +2,18 @@
 <html>
 <head>
 <style>
-body{
-    background:#020617;
-    color:red;
-    text-align:center;
-    font-family:Segoe UI;
-}
-
-input{
-    padding:15px;
-    width:300px;
-    background:black;
-    border:1px solid red;
-    color:red;
-}
-
-button{
-    padding:15px;
-    width:320px;
-    background:red;
-    border:none;
-}
+    :root { --neon: #ff4d4d; --bg: #020617; }
+    /* Use the same CSS from encrypt.html, the --neon variable handles the color change */
 </style>
 </head>
-
 <body>
-
-<h1>🔓 Decryption Process</h1>
-
-<form method="POST">
-<input name="text" required><br>
-<button>Decrypt</button>
-</form>
-
+    <div class="bg-grid"></div>
+    <div class="glass-panel">
+        <h1>🔓 Decryption Process</h1>
+        <form method="POST">
+            <input name="text" placeholder="Paste encrypted string" required><br>
+            <button style="background: var(--neon); color: white;">Decrypt Data</button>
+        </form>
+    </div>
 </body>
 </html>
