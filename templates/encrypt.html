@@ -60,9 +60,15 @@ button {
 
 <div class="box">
     <form action="/encrypt" method="post">
-        <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
-        <button type="submit">Encrypt</button>
-    </form>
+    <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
+    <button type="submit">Encrypt</button>
+</form>
+
+{% if result %}
+    <p style="color:cyan; margin-top:10px;">
+        Encrypted: {{ result }}
+    </p>
+{% endif %}
 </div>
 
 </body>
