@@ -1,32 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Encrypt</title>
+<title>Encryption</title>
 
 <style>
 body {
-    background: black;
-    color: cyan;
-    text-align: center;
+    margin: 0;
+    background: radial-gradient(circle at center, #000000, #020617);
     font-family: Arial;
+    color: #00ffcc;
+    text-align: center;
+    overflow: hidden;
 }
 
+/* Glow title */
 h1 {
-    margin-top: 50px;
-    text-shadow: 0 0 10px cyan;
+    margin-top: 40px;
+    text-shadow: 0 0 10px #00ffcc, 0 0 30px #00ffcc;
 }
 
+/* MAIN CIRCLE SYSTEM */
+.circle {
+    position: relative;
+    margin: 100px auto;
+    width: 250px;
+    height: 250px;
+}
+
+/* Outer ring */
+.outer {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 2px solid #00ffcc;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #00ffcc;
+    animation: spin 8s linear infinite;
+}
+
+/* Middle ring */
+.middle {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    top: 35px;
+    left: 35px;
+    border: 2px dashed #00ffcc;
+    border-radius: 50%;
+    animation: spinReverse 6s linear infinite;
+}
+
+/* Inner pulse circle */
+.inner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 75px;
+    left: 75px;
+    border-radius: 50%;
+    background: rgba(0,255,200,0.1);
+    box-shadow: 0 0 30px #00ffcc;
+    animation: pulse 2s infinite;
+}
+
+/* Center text */
+.center {
+    position: absolute;
+    top: 105px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+/* Animations */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Form */
 input, button {
     padding: 12px;
     margin: 10px;
     width: 250px;
-    background: black;
-    border: 1px solid cyan;
-    color: cyan;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
 }
 
 button {
     cursor: pointer;
+    box-shadow: 0 0 10px #00ffcc;
+}
+
+button:hover {
+    box-shadow: 0 0 20px #00ffcc;
 }
 </style>
 
@@ -34,7 +114,14 @@ button {
 
 <body>
 
-<h1>🔐 Encryption</h1>
+<h1>🔐 Encryption System</h1>
+
+<div class="circle">
+    <div class="outer"></div>
+    <div class="middle"></div>
+    <div class="inner"></div>
+    <div class="center">ENCRYPTING</div>
+</div>
 
 <form action="/encrypt" method="post">
     <input type="text" name="text" placeholder="Enter text" required><br>
@@ -42,11 +129,11 @@ button {
 </form>
 
 {% if result %}
-<p>Encrypted: {{ result }}</p>
+<p style="color:#00ffcc;">Encrypted: {{ result }}</p>
 {% endif %}
 
 <br>
-<a href="/dashboard">⬅ Back</a>
+<a href="/dashboard" style="color:#00ffcc;">⬅ Back</a>
 
 </body>
 </html>
