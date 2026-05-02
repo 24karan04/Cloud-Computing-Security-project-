@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Encrypting...</title>
-
-<script>
-setTimeout(() => {
-    window.location.href = "/encrypt/result?text={{ text }}";
-}, 2500);
-</script>
-
 <style>
-body {
+body{
     background:#020617;
     color:#00ffcc;
     text-align:center;
-    font-family:Arial;
+    font-family:Segoe UI;
 }
 
-.loader {
-    margin:150px auto;
-    width:120px;
-    height:120px;
-    border:6px solid #111;
-    border-top:6px solid #00ffcc;
-    border-radius:50%;
-    animation:spin 1.5s linear infinite;
+.box{
+    margin-top:150px;
 }
 
-@keyframes spin {
-    100% { transform:rotate(360deg); }
+input{
+    padding:15px;
+    width:300px;
+    background:black;
+    border:1px solid #00ffcc;
+    color:#00ffcc;
+}
+
+button{
+    padding:15px;
+    width:320px;
+    margin-top:10px;
+    background:#00ffcc;
+    border:none;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Encrypting your data...</h1>
-<div class="loader"></div>
+<h1>🔐 Encryption Process</h1>
+
+<div class="box">
+<form method="POST">
+<input name="text" placeholder="Enter text" required><br>
+<button>Encrypt</button>
+</form>
+</div>
 
 </body>
 </html>
