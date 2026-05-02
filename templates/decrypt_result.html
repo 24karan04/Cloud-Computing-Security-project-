@@ -1,50 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Decrypted</title>
-
 <style>
-body {
+body{
     background:#020617;
-    color:#ff0033;
+    color:red;
     text-align:center;
-    font-family:Arial;
+    font-family:Segoe UI;
 }
 
-.box {
+.result{
+    padding:20px;
+    background:black;
+    border:1px solid red;
     margin-top:150px;
-    border:1px solid #ff0033;
-    padding:30px;
-    display:inline-block;
-    border-radius:15px;
-    box-shadow:0 0 20px #ff0033;
-}
-
-button {
-    margin:10px;
-    padding:10px 20px;
-    border:none;
-    background:#ff0033;
-    color:white;
-    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Decryption Complete ✅</h1>
+<h1>Decrypted Text</h1>
 
-<div class="box">
-<p><b>Decrypted Text:</b></p>
-<p>{{ result }}</p>
-</div>
+<div class="result">{{result}}</div><br>
 
-<br><br>
-
-<a href="/decrypt"><button>Decrypt Again</button></a>
-<a href="/encrypt"><button>Go to Encrypt</button></a>
-<a href="/dashboard"><button>Dashboard</button></a>
+<a href="/decrypt"><button>Decrypt Another</button></a>
 
 </body>
 </html>
