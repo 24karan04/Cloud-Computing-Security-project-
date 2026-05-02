@@ -2,37 +2,86 @@
 <html>
 <head>
 <title>Login</title>
+
 <style>
 body {
-    background: #0f172a;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
     color: white;
     text-align: center;
-    font-family: Arial;
+
+    background: url("{{ url_for('static', filename='images/cloud-login.png') }}")
+                no-repeat center center/cover;
 }
+
 .box {
     margin-top: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 25px rgba(0, 150, 255, 0.3);
 }
-input, button {
-    padding: 10px;
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #38bdf8;
+}
+
+input {
+    padding: 12px;
     margin: 10px;
-    width: 200px;
-}
-button {
-    background: #38bdf8;
+    width: 220px;
+    border-radius: 8px;
     border: none;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    width: 240px;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 </style>
+
 </head>
 
 <body>
+
 <div class="box">
-    <h1>🔐 Login</h1>
+
+    <!-- New Heading -->
+    <h1>☁️ Cloud Security Project</h1>
+    <h2>🔐 Login</h2>
 
     <form action="/login_user" method="post">
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Password" required><br>
         <button type="submit">Login</button>
     </form>
+
+    <!-- Optional navigation -->
+    <p>Don't have an account?</p>
+    <a href="/register" style="color:#38bdf8;">Register here</a>
+
 </div>
+
 </body>
 </html>
