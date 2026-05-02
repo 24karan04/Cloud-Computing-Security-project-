@@ -2,22 +2,128 @@
 <html>
 <head>
 <title>Login</title>
+
 <style>
-body{background:#020617;color:white;display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial;}
-.card{padding:40px;border-radius:15px;background:#111;box-shadow:0 0 20px #00ffcc;text-align:center;}
-input,button{margin:10px;padding:10px;width:250px;}
-button{background:#00ffcc;border:none;}
+body{
+    margin:0;
+    font-family:'Segoe UI';
+    background: radial-gradient(circle at center,#020617,#000);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image: radial-gradient(#00ccff33 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:0.3;
+}
+
+.container{
+    width:400px;
+    padding:40px;
+    border-radius:20px;
+    background:rgba(10,15,30,0.8);
+    backdrop-filter: blur(15px);
+    box-shadow:0 0 40px rgba(0,200,255,0.2);
+    text-align:center;
+}
+
+h1{
+    color:#5cc8ff;
+}
+
+.sub{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.input-box{
+    margin:15px 0;
+    text-align:left;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #2a3a5a;
+    background:#0b1224;
+    color:white;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:10px;
+    background: linear-gradient(90deg,#4facfe,#8e44ad);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.links{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-size:14px;
+}
+
+a{
+    color:#5cc8ff;
+    text-decoration:none;
+}
+
+.footer{
+    margin-top:20px;
+    color:#aaa;
+}
 </style>
 </head>
+
 <body>
-<div class="card">
-<h2>Login</h2>
+
+<div class="container">
+
+<h1>☁️ Cloud Security</h1>
+<p class="sub">Secure your data in the cloud</p>
+
+<h2>Welcome Back</h2>
+
 <form method="POST">
-<input name="username" required><br>
-<input type="password" name="password" required><br>
-<button>Login</button>
-</form>
+
+<div class="input-box">
+<label>Email Address</label>
+<input type="email" name="username" placeholder="Enter your email" required>
+</div>
+
+<div class="input-box">
+<label>Password</label>
+<input type="password" name="password" placeholder="Enter password" required>
+</div>
+
+<div class="links">
+<label><input type="checkbox"> Remember me</label>
 <a href="/forgot_password">Forgot Password?</a>
 </div>
+
+<button class="btn">Login</button>
+
+</form>
+
+<div class="footer">
+Don't have account? <a href="/register">Register here</a>
+</div>
+
+</div>
+
 </body>
 </html>
