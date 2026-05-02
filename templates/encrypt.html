@@ -6,13 +6,13 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     color: white;
     text-align: center;
     background: linear-gradient(135deg, #020617, #0f172a);
 }
 
-/* Animation */
+/* Glow animation */
 @keyframes glow {
     0% { text-shadow: 0 0 5px cyan; }
     50% { text-shadow: 0 0 20px cyan; }
@@ -34,6 +34,7 @@ body {
     display: inline-block;
 }
 
+/* Input */
 input {
     padding: 12px;
     width: 250px;
@@ -41,6 +42,7 @@ input {
     border: none;
 }
 
+/* Button */
 button {
     padding: 12px;
     width: 270px;
@@ -49,6 +51,17 @@ button {
     border-radius: 8px;
     color: white;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Back link */
+a {
+    color: #38bdf8;
+    text-decoration: none;
 }
 </style>
 
@@ -59,16 +72,22 @@ button {
 <div class="title">🔐 Encryption Process</div>
 
 <div class="box">
-    <form action="/encrypt" method="post">
-    <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
-    <button type="submit">Encrypt</button>
-</form>
 
-{% if result %}
-    <p style="color:cyan; margin-top:10px;">
-        Encrypted: {{ result }}
-    </p>
-{% endif %}
+    <form action="/encrypt" method="post">
+        <input type="text" name="text" placeholder="Enter text to encrypt" required><br>
+        <button type="submit">Encrypt</button>
+    </form>
+
+    <!-- RESULT SHOWS HERE -->
+    {% if result %}
+        <p style="color:cyan; margin-top:15px;">
+            Encrypted: {{ result }}
+        </p>
+    {% endif %}
+
+    <br>
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+
 </div>
 
 </body>
