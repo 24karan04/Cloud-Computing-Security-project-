@@ -45,20 +45,26 @@ def dashboard():
     return render_template("dashboard.html")
 
 
-# ---------------- ENCRYPT ----------------
-@app.route('/encrypt', methods=['POST'])
+# ---------------- ENCRYPT PAGE ----------------
+@app.route('/encrypt', methods=['GET', 'POST'])
 def encrypt():
-    text = request.form['text']
-    result = text[::-1]   # simple demo encryption
-    return f"Encrypted: {result}"
+    if request.method == 'POST':
+        text = request.form['text']
+        result = text[::-1]   # simple demo encryption
+        return render_template("encrypt.html", result=result)
+
+    return render_template("encrypt.html")
 
 
-# ---------------- DECRYPT ----------------
-@app.route('/decrypt', methods=['POST'])
+# ---------------- DECRYPT PAGE ----------------
+@app.route('/decrypt', methods=['GET', 'POST'])
 def decrypt():
-    text = request.form['text']
-    result = text[::-1]
-    return f"Decrypted: {result}"
+    if request.method == 'POST':
+        text = request.form['text']
+        result = text[::-1]   # reverse back
+        return render_template("decrypt.html", result=result)
+
+    return render_template("decrypt.html")
 
 
 # ---------------- RUN ----------------
