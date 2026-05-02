@@ -2,40 +2,18 @@
 <html>
 <head>
 <style>
-body{
-    background:#020617;
-    color:#00ffcc;
-    text-align:center;
-    font-family:Segoe UI;
-}
-
-/* circle loader */
-.circle{
-    width:200px;
-    height:200px;
-    border:10px solid #00ffcc;
-    border-top:10px solid transparent;
-    border-radius:50%;
-    margin:150px auto;
-    animation:spin 2s linear infinite;
-}
-
-@keyframes spin{
-    100%{transform:rotate(360deg);}
-}
+    :root { --neon: #00ffcc; --bg: #020617; }
+    body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Segoe UI'; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; }
+    .loader { width: 120px; height: 120px; border: 8px solid rgba(255,255,255,0.1); border-top: 8px solid var(--neon); border-radius: 50%; animation: spin 1s linear infinite; box-shadow: 0 0 15px var(--neon); }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
 </head>
-
 <body>
-
-<h1>Encrypting your data...</h1>
-<div class="circle"></div>
-
-<script>
-setTimeout(()=>{
-    window.location="/encrypt_result?text={{text}}"
-},2000)
-</script>
-
+    <h1>Encrypting your data...</h1>
+    <div class="loader"></div>
+    <p>Securing packets for Cloud Storage</p>
+    <script>
+        setTimeout(()=>{ window.location="/encrypt_result?text={{text}}" }, 2000)
+    </script>
 </body>
 </html>
