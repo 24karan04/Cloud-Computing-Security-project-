@@ -1,86 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Dashboard</title>
-<style>
-body{
-    margin:0;
-    font-family:Segoe UI;
-    background:#020617;
-    color:white;
-    text-align:center;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Security Dashboard</title>
+    <style>
+        :root {
+            --bg-dark: #020617;
+            --neon-blue: #00ccff;
+            --neon-green: #00ffcc;
+            --neon-red: #ff4d4d;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
 
-/* network background */
-body::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:url("https://www.transparenttextures.com/patterns/cubes.png");
-    opacity:0.1;
-}
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
 
-h1{
-    margin-top:50px;
-    color:#00ccff;
-}
+        /* Background Network Effect */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            z-index: -1;
+        }
 
-.container{
-    margin-top:100px;
-}
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            animation: fadeIn 0.4s ease-in-out;
+        }
 
-.card{
-    display:inline-block;
-    width:280px;
-    padding:40px;
-    margin:30px;
-    border-radius:20px;
-    background:rgba(0,0,0,0.6);
-    box-shadow:0 0 30px rgba(0,255,200,0.3);
-    transition:0.3s;
-}
+        .active { display: flex; }
 
-.card:hover{
-    transform:scale(1.1);
-}
+        h1 { font-size: 2.8rem; margin-bottom: 40px; }
+        h1 span { color: #8b5cf6; } /* Matching the purple 'Dashboard' text */
 
-.encrypt{
-    box-shadow:0 0 30px #00ffcc;
-}
+        .card-container { display: flex; gap: 40px; }
 
-.decrypt{
-    box-shadow:0 0 30px red;
-}
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px 30px;
+            width: 320px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-a{
-    text-decoration:none;
-    color:white;
-}
-</style>
+        /* Step 1: Dashboard Hover Effects */
+        .enc-card:hover { border-color: var(--neon-green); box-shadow: 0 0 30px rgba(0, 255, 204, 0.2); transform: translateY(-10px); }
+        .dec-card:hover { border-color: var(--neon-red); box-shadow: 0 0 30px rgba(255, 77, 77, 0.2); transform: translateY(-10px); }
+
+        .icon-circle {
+            width: 80px; height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem;
+            border: 2px solid;
+        }
+
+        /* Step 2 & 3: Input and Animation Styles */
+        .input-box {
+            width: 80%;
+            padding: 15px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1rem;
+        }
+
+        .process-btn {
+            padding: 12px 40px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Loading Ring */
+        .loader {
+            border: 6px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 80px; height: 80px;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
 </head>
-
 <body>
 
-<h1>☁️ Cloud Security Dashboard</h1>
+    <!-- STEP 1: Main Dashboard -->
+    <div id="step1" class="screen active">
+        <h1>☁️ Cloud Security <span>Dashboard</span></h1>
+        <div class="card-container">
+            <div class="glass-card enc-card" onclick="changeScreen('step2')">
+                <div class="icon-circle" style="color: var(--neon-green); border-color: var(--neon-green);">🔒</div>
+                <h2>Encrypt Data</h2>
+                <p>Secure your data using encryption</p>
+            </div>
+            <div class="glass-card dec-card" onclick="changeScreen('step3')">
+                <div class="icon-circle" style="color: var(--neon-red); border-color: var(--neon-red);">🔓</div>
+                <h2>Decrypt Data</h2>
+                <p>Recover your encrypted data</p>
+            </div>
+        </div>
+    </div>
 
-<div class="container">
+    <!-- STEP 2: Encryption Page -->
+    <div id="step2" class="screen">
+        <h1 style="color: var(--neon-green);">🔒 Encryption Process</h1>
+        <div class="glass-card" id="enc-input" style="width: 500px;">
+            <p>Enter text to encrypt</p>
+            <input type="text" class="input-box" id="pText" placeholder="Hello Cloud Security">
+            <button class="process-btn" style="background: var(--neon-green);" onclick="process('enc')">Encrypt</button>
+        </div>
 
-<a href="/encrypt">
-<div class="card encrypt">
-<h2>🔐 Encrypt Data</h2>
-<p>Secure your data using encryption</p>
-</div>
-</a>
+        <div class="glass-card" id="enc-loading" style="display:none; width: 500px;">
+            <p>Encrypting your data...</p>
+            <div class="loader" style="border-top: 6px solid var(--neon-green);"></div>
+            <p>Please wait...</p>
+        </div>
 
-<a href="/decrypt">
-<div class="card decrypt">
-<h2>🔓 Decrypt Data</h2>
-<p>Recover your encrypted data</p>
-</div>
-</a>
+        <div class="glass-card" id="enc-result" style="display:none; width: 500px;">
+            <p>Encrypted Text</p>
+            <textarea class="input-box" style="height:80px;" readonly>U2FsdGVkX1+Kj9Qh8Zz...JkL3mN9PqR5tWv==</textarea>
+            <button class="process-btn" style="background: var(--neon-green);" onclick="location.reload()">Encrypt Another Text</button>
+        </div>
+    </div>
 
-</div>
+    <!-- STEP 3: Decryption Page -->
+    <div id="step3" class="screen">
+        <h1 style="color: var(--neon-red);">🔓 Decryption Process</h1>
+        <div class="glass-card" id="dec-input" style="width: 500px;">
+            <p>Enter text to decrypt</p>
+            <textarea class="input-box" style="height:80px;">U2FsdGVkX1+Kj9Qh8Zz...</textarea>
+            <button class="process-btn" style="background: var(--neon-red); color: white;" onclick="process('dec')">Decrypt</button>
+        </div>
 
+        <div class="glass-card" id="dec-loading" style="display:none; width: 500px;">
+            <p>Decrypting your data...</p>
+            <div class="loader" style="border-top: 6px solid var(--neon-red);"></div>
+            <p>Please wait...</p>
+        </div>
+
+        <div class="glass-card" id="dec-result" style="display:none; width: 500px;">
+            <p>Decrypted Text</p>
+            <input type="text" class="input-box" value="Hello Cloud Security" readonly>
+            <button class="process-btn" style="background: var(--neon-red); color: white;" onclick="location.reload()">Decrypt Another Text</button>
+        </div>
+    </div>
+
+    <script>
+        function changeScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function process(type) {
+            document.getElementById(type + '-input').style.display = 'none';
+            document.getElementById(type + '-loading').style.display = 'block';
+
+            // 3-second delay to show the "Please wait" state from your picture
+            setTimeout(() => {
+                document.getElementById(type + '-loading').style.display = 'none';
+                document.getElementById(type + '-result').style.display = 'block';
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
